@@ -1,0 +1,569 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Tue Sep 15 18:43:48 2026
+| Host         : HARSHITHKUMAR running 64-bit major release  (build 9200)
+| Command      : report_timing -file C:/VLSI_Project/vivado/reports/timing_detail.rpt -max_paths 10
+| Design       : streaming_conv_top
+| Device       : 7a35t-cpg236
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             5.781ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[7]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.543ns  (logic 4.232ns (56.109%)  route 3.311ns (43.891%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.809     7.292    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.354     7.646 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_1/O
+                         net (fo=1, routed)           1.730     9.376    pixel_out_OBUF[7]
+    W19                  OBUF (Prop_obuf_I_O)         2.807    12.183 r  pixel_out_OBUF[7]_inst/O
+                         net (fo=0)                   0.000    12.183    pixel_out[7]
+    W19                                                               r  pixel_out[7]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -12.183    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  5.781    <hidden>
+
+Slack (MET) :             5.786ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[5]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.537ns  (logic 4.234ns (56.167%)  route 3.304ns (43.833%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.816     7.299    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.358     7.657 r  u_convolution_3x3/pixel_out_OBUF[5]_inst_i_1/O
+                         net (fo=1, routed)           1.717     9.374    pixel_out_OBUF[5]
+    T18                  OBUF (Prop_obuf_I_O)         2.805    12.178 r  pixel_out_OBUF[5]_inst/O
+                         net (fo=0)                   0.000    12.178    pixel_out[5]
+    T18                                                               r  pixel_out[5]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -12.178    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  5.786    <hidden>
+
+Slack (MET) :             5.932ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[4]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.392ns  (logic 4.000ns (54.119%)  route 3.391ns (45.881%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.816     7.299    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.329     7.628 r  u_convolution_3x3/pixel_out_OBUF[4]_inst_i_1/O
+                         net (fo=1, routed)           1.804     9.432    pixel_out_OBUF[4]
+    U17                  OBUF (Prop_obuf_I_O)         2.600    12.032 r  pixel_out_OBUF[4]_inst/O
+                         net (fo=0)                   0.000    12.032    pixel_out[4]
+    U17                                                               r  pixel_out[4]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -12.032    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  5.932    <hidden>
+
+Slack (MET) :             5.959ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[0]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.364ns  (logic 4.208ns (57.134%)  route 3.157ns (42.866%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.574     7.057    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.323     7.380 r  u_convolution_3x3/pixel_out_OBUF[0]_inst_i_1/O
+                         net (fo=1, routed)           1.812     9.192    pixel_out_OBUF[0]
+    W16                  OBUF (Prop_obuf_I_O)         2.814    12.005 r  pixel_out_OBUF[0]_inst/O
+                         net (fo=0)                   0.000    12.005    pixel_out[0]
+    W16                                                               r  pixel_out[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -12.005    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  5.959    <hidden>
+
+Slack (MET) :             6.032ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[6]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.291ns  (logic 3.999ns (54.845%)  route 3.292ns (45.155%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.809     7.292    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.329     7.621 r  u_convolution_3x3/pixel_out_OBUF[6]_inst_i_1/O
+                         net (fo=1, routed)           1.712     9.333    pixel_out_OBUF[6]
+    T17                  OBUF (Prop_obuf_I_O)         2.599    11.932 r  pixel_out_OBUF[6]_inst/O
+                         net (fo=0)                   0.000    11.932    pixel_out[6]
+    T17                                                               r  pixel_out[6]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -11.932    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  6.032    <hidden>
+
+Slack (MET) :             6.112ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[3]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.212ns  (logic 4.192ns (58.127%)  route 3.020ns (41.873%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.578     7.061    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.324     7.385 r  u_convolution_3x3/pixel_out_OBUF[3]_inst_i_1/O
+                         net (fo=1, routed)           1.671     9.056    pixel_out_OBUF[3]
+    U18                  OBUF (Prop_obuf_I_O)         2.797    11.853 r  pixel_out_OBUF[3]_inst/O
+                         net (fo=0)                   0.000    11.853    pixel_out[3]
+    U18                                                               r  pixel_out[3]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -11.853    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  6.112    <hidden>
+
+Slack (MET) :             6.279ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[2]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.044ns  (logic 4.009ns (56.913%)  route 3.035ns (43.087%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.578     7.061    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.329     7.390 r  u_convolution_3x3/pixel_out_OBUF[2]_inst_i_1/O
+                         net (fo=1, routed)           1.686     9.076    pixel_out_OBUF[2]
+    V16                  OBUF (Prop_obuf_I_O)         2.609    11.685 r  pixel_out_OBUF[2]_inst/O
+                         net (fo=0)                   0.000    11.685    pixel_out[2]
+    V16                                                               r  pixel_out[2]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -11.685    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  6.279    <hidden>
+
+Slack (MET) :             6.309ns  (required time - arrival time)
+  Source:                 u_convolution_3x3/sum_all_reg[10]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_out[1]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        7.015ns  (logic 4.001ns (57.030%)  route 3.014ns (42.970%))
+  Logic Levels:           4  (CARRY4=1 LUT2=2 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.641ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.641ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.635     4.641    u_convolution_3x3/clk_IBUF_BUFG
+    SLICE_X1Y11          FDCE                                         r  u_convolution_3x3/sum_all_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y11          FDCE (Prop_fdce_C_Q)         0.456     5.097 f  u_convolution_3x3/sum_all_reg[10]/Q
+                         net (fo=2, routed)           0.771     5.868    u_convolution_3x3/sum_all[10]
+    SLICE_X3Y10          LUT2 (Prop_lut2_I0_O)        0.124     5.992 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5/O
+                         net (fo=1, routed)           0.000     5.992    u_convolution_3x3/pixel_out_OBUF[7]_inst_i_5_n_0
+    SLICE_X3Y10          CARRY4 (Prop_carry4_S[1]_CO[1])
+                                                      0.491     6.483 r  u_convolution_3x3/pixel_out_OBUF[7]_inst_i_2/CO[1]
+                         net (fo=8, routed)           0.574     7.057    u_convolution_3x3/saturated_out1
+    SLICE_X0Y12          LUT2 (Prop_lut2_I0_O)        0.329     7.386 r  u_convolution_3x3/pixel_out_OBUF[1]_inst_i_1/O
+                         net (fo=1, routed)           1.670     9.055    pixel_out_OBUF[1]
+    V17                  OBUF (Prop_obuf_I_O)         2.601    11.656 r  pixel_out_OBUF[1]_inst/O
+                         net (fo=0)                   0.000    11.656    pixel_out[1]
+    V17                                                               r  pixel_out[1]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -11.656    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  6.309    <hidden>
+
+Slack (MET) :             6.908ns  (required time - arrival time)
+  Source:                 out_col_cnt_reg[3]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            pixel_valid_out
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        6.423ns  (logic 3.306ns (51.462%)  route 3.118ns (48.538%))
+  Logic Levels:           3  (LUT5=1 LUT6=1 OBUF=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -4.633ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 ) 
+    Source Clock Delay      (SCD):    4.633ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+    M18                                               0.000     0.000 r  clk
+                         net (fo=0)                   0.000     0.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.938     0.938 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.972     2.910    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.006 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.627     4.633    clk_IBUF_BUFG
+    SLICE_X0Y18          FDCE                                         r  out_col_cnt_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y18          FDCE (Prop_fdce_C_Q)         0.456     5.089 f  out_col_cnt_reg[3]/Q
+                         net (fo=5, routed)           1.031     6.119    u_convolution_3x3/Q[2]
+    SLICE_X0Y16          LUT6 (Prop_lut6_I1_O)        0.124     6.243 r  u_convolution_3x3/pixel_valid_out_OBUF_inst_i_2/O
+                         net (fo=2, routed)           0.418     6.661    u_convolution_3x3/out_col_cnt_reg[5]
+    SLICE_X1Y17          LUT5 (Prop_lut5_I0_O)        0.124     6.785 r  u_convolution_3x3/pixel_valid_out_OBUF_inst_i_1/O
+                         net (fo=1, routed)           1.670     8.455    pixel_valid_out_OBUF
+    W18                  OBUF (Prop_obuf_I_O)         2.602    11.056 r  pixel_valid_out_OBUF_inst/O
+                         net (fo=0)                   0.000    11.056    pixel_valid_out
+    W18                                                               r  pixel_valid_out
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -11.056    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  6.908    <hidden>
+
+Slack (MET) :             10.304ns  (required time - arrival time)
+  Source:                 pixel_valid
+                            (input port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            u_window_3x3/win_reg[0][0]/CE
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        11.516ns  (logic 1.103ns (9.579%)  route 10.413ns (90.421%))
+  Logic Levels:           2  (IBUF=1 LUT2=1)
+  Input Delay:            2.000ns
+  Clock Path Skew:        4.284ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.284ns = ( 24.284 - 20.000 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                         input delay                  2.000     2.000    <hidden>
+    V15                                               0.000     2.000 r  pixel_valid
+                         net (fo=0)                   0.000     2.000    pixel_valid
+    V15                  IBUF (Prop_ibuf_I_O)         0.951     2.951 r  pixel_valid_IBUF_inst/O
+                         net (fo=1070, routed)        7.982    10.933    u_window_3x3/pixel_valid_IBUF
+    SLICE_X2Y18          LUT2 (Prop_lut2_I0_O)        0.152    11.085 r  u_window_3x3/win[4][7]_i_1/O
+                         net (fo=73, routed)          2.431    13.516    u_window_3x3/pixel_valid0
+    SLICE_X3Y2           FDCE                                         r  u_window_3x3/win_reg[0][0]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+    M18                                               0.000    20.000 r  clk
+                         net (fo=0)                   0.000    20.000    clk
+    M18                  IBUF (Prop_ibuf_I_O)         0.805    20.805 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.868    22.673    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    22.764 r  clk_IBUF_BUFG_inst/O
+                         net (fo=1257, routed)        1.520    24.284    u_window_3x3/clk_IBUF_BUFG
+    SLICE_X3Y2           FDCE                                         r  u_window_3x3/win_reg[0][0]/C
+                         clock pessimism              0.000    24.284    <hidden>
+                         clock uncertainty           -0.035    24.249    <hidden>
+    SLICE_X3Y2           FDCE (Setup_fdce_C_CE)      -0.429    23.820    u_window_3x3/win_reg[0][0]
+  -------------------------------------------------------------------
+                         required time                         23.820    <hidden>
+                         arrival time                         -13.516    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 10.304    <hidden>
+
+
+
+

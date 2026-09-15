@@ -1,0 +1,240 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Tue Sep 15 18:29:45 2026
+| Host         : HARSHITHKUMAR running 64-bit major release  (build 9200)
+| Command      : report_timing -file C:/VLSI_Project/vivado/reports/timing_detail_sobel.rpt -max_paths 10
+| Design       : streaming_sobel_top
+| Device       : 7a35t-cpg236
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack:                    inf
+  Source:                 out_col_cnt_reg[5]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_valid_out
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        5.703ns  (logic 3.460ns (60.676%)  route 2.243ns (39.324%))
+  Logic Levels:           4  (FDCE=1 LUT5=1 LUT6=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  out_col_cnt_reg[5]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 f  out_col_cnt_reg[5]/Q
+                         net (fo=3, unplaced)         0.983     1.439    u_sobel_edge_detect/pixel_valid_out[4]
+                         LUT6 (Prop_lut6_I0_O)        0.295     1.734 r  u_sobel_edge_detect/pixel_valid_out_OBUF_inst_i_2/O
+                         net (fo=2, unplaced)         0.460     2.194    u_sobel_edge_detect/out_col_cnt_reg[5]
+                         LUT5 (Prop_lut5_I0_O)        0.124     2.318 r  u_sobel_edge_detect/pixel_valid_out_OBUF_inst_i_1/O
+                         net (fo=1, unplaced)         0.800     3.118    pixel_valid_out_OBUF
+                         OBUF (Prop_obuf_I_O)         2.585     5.703 r  pixel_valid_out_OBUF_inst/O
+                         net (fo=0)                   0.000     5.703    pixel_valid_out
+                                                                      r  pixel_valid_out
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[0]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[0]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[0]
+                                                                      r  pixel_out[0]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[1]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[1]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[1]
+                                                                      r  pixel_out[1]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[2]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[2]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[2]
+                                                                      r  pixel_out[2]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[3]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[3]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[3]
+                                                                      r  pixel_out[3]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[4]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[4]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[4]
+                                                                      r  pixel_out[4]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[5]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[5]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[5]
+                                                                      r  pixel_out[5]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[6]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[6]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[6]
+                                                                      r  pixel_out[6]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/edge_result_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            pixel_out[7]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        4.016ns  (logic 3.216ns (80.087%)  route 0.800ns (19.913%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/edge_result_reg[7]/C
+                         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  u_sobel_edge_detect/edge_result_reg[7]/Q
+                         net (fo=8, unplaced)         0.800     1.256    pixel_out_OBUF[0]
+                         OBUF (Prop_obuf_I_O)         2.760     4.016 r  pixel_out_OBUF[7]_inst/O
+                         net (fo=0)                   0.000     4.016    pixel_out[7]
+                                                                      r  pixel_out[7]
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 u_sobel_edge_detect/gx_total_reg[0]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            u_sobel_edge_detect/abs_gx_reg[24]/D
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        3.756ns  (logic 2.474ns (65.868%)  route 1.282ns (34.132%))
+  Logic Levels:           9  (CARRY4=6 FDCE=1 LUT1=1 LUT2=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         FDCE                         0.000     0.000 r  u_sobel_edge_detect/gx_total_reg[0]/C
+                         FDCE (Prop_fdce_C_Q)         0.478     0.478 f  u_sobel_edge_detect/gx_total_reg[0]/Q
+                         net (fo=2, unplaced)         0.322     0.800    u_sobel_edge_detect/gx_total[0]
+                         LUT1 (Prop_lut1_I0_O)        0.295     1.095 r  u_sobel_edge_detect/i__carry_i_1__0/O
+                         net (fo=1, unplaced)         0.333     1.428    u_sobel_edge_detect/i__carry_i_1__0_n_0
+                         CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.595     2.023 r  u_sobel_edge_detect/_inferred__2/i__carry/CO[3]
+                         net (fo=1, unplaced)         0.009     2.032    u_sobel_edge_detect/_inferred__2/i__carry_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     2.149 r  u_sobel_edge_detect/_inferred__2/i__carry__0/CO[3]
+                         net (fo=1, unplaced)         0.000     2.149    u_sobel_edge_detect/_inferred__2/i__carry__0_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     2.266 r  u_sobel_edge_detect/_inferred__2/i__carry__1/CO[3]
+                         net (fo=1, unplaced)         0.000     2.266    u_sobel_edge_detect/_inferred__2/i__carry__1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     2.383 r  u_sobel_edge_detect/_inferred__2/i__carry__2/CO[3]
+                         net (fo=1, unplaced)         0.000     2.383    u_sobel_edge_detect/_inferred__2/i__carry__2_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     2.500 r  u_sobel_edge_detect/_inferred__2/i__carry__3/CO[3]
+                         net (fo=1, unplaced)         0.000     2.500    u_sobel_edge_detect/_inferred__2/i__carry__3_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331     2.831 r  u_sobel_edge_detect/_inferred__2/i__carry__4/O[3]
+                         net (fo=1, unplaced)         0.618     3.449    u_sobel_edge_detect/abs_gx1[24]
+                         LUT2 (Prop_lut2_I1_O)        0.307     3.756 r  u_sobel_edge_detect/abs_gx[24]_i_1/O
+                         net (fo=1, unplaced)         0.000     3.756    u_sobel_edge_detect/abs_gx[24]_i_1_n_0
+                         FDCE                                         r  u_sobel_edge_detect/abs_gx_reg[24]/D
+  -------------------------------------------------------------------    -------------------
+
+
+
+
