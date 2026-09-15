@@ -46,6 +46,11 @@ module tb_sobel_edge;
     logic [PIXEL_W-1:0] test_image [0:2047][0:2047];
 
     // =========================================================================
+    // File output for MATLAB visualization
+    // =========================================================================
+    integer output_file;
+
+    // =========================================================================
     // Clock generation
     // =========================================================================
     initial clk = 0;
@@ -152,6 +157,9 @@ module tb_sobel_edge;
             expected = (mag >= THRESHOLD) ? 255 : 0;
 
             if (pixel_valid_out) begin
+                // Write pixel to file for MATLAB visualization
+                $fwrite(output_file, "%02x\n", pixel_out);
+
                 if (pixel_out !== expected[PIXEL_W-1:0]) begin
                     total_errors = total_errors + 1;
                     if (!first_error_found) begin
@@ -314,6 +322,13 @@ module tb_sobel_edge;
         $dumpfile("tb_sobel_edge.vcd");
         $dumpvars(0, tb_sobel_edge);
 
+        // Open file for MATLAB visualization
+        output_file = $fopen("vivado_edge_output.hex", "w");
+        if (output_file == 0) begin
+            $display("ERROR: Could not open output file!");
+            $finish;
+        end
+
         // =====================================================================
         // TEST 1: 64x64 vertical edge
         // =====================================================================
@@ -350,6 +365,10 @@ module tb_sobel_edge;
         $display("\n========================================");
         $display("  ALL STAGE 2 (SOBEL) TESTS COMPLETE");
         $display("========================================");
+
+        // Close output file for MATLAB
+        $fclose(output_file);
+        $display("  Output saved to: vivado_edge_output.hex");
 
         #(CLK_PERIOD * 10);
         $finish;

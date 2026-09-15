@@ -1,103 +1,74 @@
 %% reference_model.m
-% MATLAB Reference Model for Sobel Edge Detection
-% Input: Any image → Output: Edge map + Colour map + Histogram
+% MATLAB Visualization for Vivado Edge Detection Output
+% Reads Vivado output file and displays: Edge image, Colour map, Histogram
 %
-% Usage:
-%   1. Set image_path to your image file
-%   2. Run this script
-%   3. Three figures will appear: Edge detected, Colour mapped, Histogram
+% Workflow:
+%   1. Run Vivado simulation → creates vivado_edge_output.hex
+%   2. Run this MATLAB script → reads hex file → shows images
 
 %% Parameters
 clear; clc; close all;
 
 IMAGE_WIDTH = 64;
 IMAGE_HEIGHT = 64;
-THRESHOLD = 128;
+VALID_WIDTH = IMAGE_WIDTH - 2;   % 62
+VALID_HEIGHT = IMAGE_HEIGHT - 2; % 62
 
-%% Load Image
-% Change this to your image path
-image_path = 'cameraman.tif';  % MATLAB built-in image
+%% Check if Vivado output exists
+vivado_file = 'vivado_edge_output.hex';
 
-% If image doesn't exist, create a test image
-if exist(image_path, 'file')
-    img = imread(image_path);
-else
-    fprintf('Image not found. Using built-in cameraman image.\n');
-    img = imread('cameraman.tif');
+if ~exist(vivado_file, 'file')
+    fprintf('ERROR: %s not found!\n', vivado_file);
+    fprintf('Run Vivado simulation first to generate the file.\n');
+    fprintf('\nAlternatively, running MATLAB reference model...\n\n');
+    
+    % Run MATLAB reference instead
+    run_matlab_reference(IMAGE_WIDTH, IMAGE_HEIGHT);
+    return;
 end
 
-% Convert to grayscale if needed
-if size(img, 3) == 3
-    img = rgb2gray(img);
+%% Read Vivado Output
+fprintf('=== Reading Vivado Output ===\n');
+
+% Read hex values
+fid = fopen(vivado_file, 'r');
+hex_data = textscan(fid, '%s');
+fclose(fid);
+
+% Convert hex to decimal
+pixel_values = hex2dec(hex_data{1});
+
+% Check size
+expected_pixels = VALID_WIDTH * VALID_HEIGHT;
+fprintf('Expected pixels: %d\n', expected_pixels);
+fprintf('Actual pixels: %d\n', length(pixel_values));
+
+if length(pixel_values) ~= expected_pixels
+    fprintf('WARNING: Pixel count mismatch! Using available pixels.\n');
 end
 
-% Resize to 64x64
-img = imresize(img, [IMAGE_HEIGHT IMAGE_WIDTH]);
+% Reshape to 2D image (valid region only)
+edge_image = uint8(reshape(pixel_values(1:min(length(pixel_values), expected_pixels)), ...
+    VALID_WIDTH, VALID_HEIGHT)');
 
-fprintf('=== Sobel Edge Detection Reference Model ===\n');
-fprintf('Image size: %dx%d\n', IMAGE_WIDTH, IMAGE_HEIGHT);
-fprintf('Threshold: %d\n', THRESHOLD);
+fprintf('Vivado output loaded: %dx%d\n', VALID_WIDTH, VALID_HEIGHT);
+fprintf('Edge pixels: %d / %d (%.1f%%)\n', ...
+    sum(edge_image(:) > 0), numel(edge_image), ...
+    100 * sum(edge_image(:) > 0) / numel(edge_image));
 
-%% Stage 1: Window Generation (3x3)
-% Create 3x3 windows for each pixel (valid region only)
-[H, W] = size(img);
-valid_H = H - 2;
-valid_W = W - 2;
-
-% Store all 3x3 windows
-windows = zeros(valid_H, valid_W, 3, 3);
-for r = 1:valid_H
-    for c = 1:valid_W
-        windows(r, c, :, :) = double(img(r:r+2, c:c+2));
-    end
-end
-
-fprintf('Stage 1: Generated %d x %d = %d windows\n', valid_W, valid_H, valid_W*valid_H);
-
-%% Stage 2: Sobel Edge Detection
-% Sobel kernels
-Gx = [-1 0 1; -2 0 2; -1 0 1];
-Gy = [-1 -2 -1; 0 0 0; 1 2 1];
-
-% Compute gradients
-grad_x = zeros(valid_H, valid_W);
-grad_y = zeros(valid_H, valid_W);
-magnitude = zeros(valid_H, valid_W);
-
-for r = 1:valid_H
-    for c = 1:valid_W
-        window = squeeze(windows(r, c, :, :));
-        grad_x(r, c) = sum(sum(window .* Gx));
-        grad_y(r, c) = sum(sum(window .* Gy));
-        magnitude(r, c) = abs(grad_x(r, c)) + abs(grad_y(r, c));
-    end
-end
-
-% Threshold
-edge_map = uint8(zeros(valid_H, valid_W));
-edge_map(magnitude >= THRESHOLD) = 255;
-
-fprintf('Stage 2: Sobel edge detection complete\n');
-fprintf('  Edge pixels: %d / %d (%.1f%%)\n', ...
-    sum(edge_map(:) > 0), numel(edge_map), ...
-    100 * sum(edge_map(:) > 0) / numel(edge_map));
-
-%% Figure 1: Original and Edge Detected
-figure('Name', 'Sobel Edge Detection', 'Position', [100, 100, 1000, 400]);
-
-subplot(1, 2, 1);
-imshow(img);
-title('Original Image (64x64)');
-
-subplot(1, 2, 2);
-imshow(edge_map);
-title('Edge Detected Image');
+%% Figure 1: Edge Detected Image
+figure('Name', 'Vivado Edge Detection Output', 'Position', [100, 100, 600, 500]);
+imshow(edge_image);
+title('Edge Detected Image (from Vivado)');
+xlabel('Column');
+ylabel('Row');
 
 %% Figure 2: Colour-Mapped Visualization
-figure('Name', 'Colour-Mapped Edge Output', 'Position', [100, 550, 800, 500]);
+figure('Name', 'Colour-Mapped Edge Output', 'Position', [750, 100, 700, 500]);
 
-% Use magnitude directly for colour mapping (before thresholding)
-imagesc(magnitude);
+% Convert edge map to magnitude-like values for colour mapping
+% (Vivado outputs 0 or 255, so we use that directly)
+imagesc(double(edge_image));
 colormap(jet);
 colorbar;
 title('Colour-Mapped Grayscale Edge Output');
@@ -105,36 +76,93 @@ xlabel('Column');
 ylabel('Row');
 
 %% Figure 3: Histogram
-figure('Name', 'Histogram of Pixel Intensities', 'Position', [950, 100, 700, 500]);
+figure('Name', 'Histogram of Pixel Intensities', 'Position', [100, 650, 700, 400]);
 
-% Histogram of edge map
-histogram(double(edge_map(:)), 256, 'FaceColor', [0.5 0.5 0.5]);
+histogram(double(edge_image(:)), 256, 'FaceColor', [0.5 0.5 0.5], 'EdgeColor', 'none');
 title('Histogram of Pixel Intensities');
 xlabel('Intensity Value');
 ylabel('Frequency');
 xlim([0 255]);
 grid on;
 
-%% Export Results
-% Save edge map as hex (for comparison with Vivado DUT)
-fid = fopen('matlab_edge_output.hex', 'w');
-for r = 1:valid_H
-    for c = 1:valid_W
-        fprintf(fid, '%02x\n', edge_map(r, c));
-    end
-end
-fclose(fid);
+% Add statistics
+text(180, max(histcounts(double(edge_image(:)), 256))*0.8, ...
+    sprintf('Edge pixels: %d\nTotal pixels: %d\nEdge ratio: %.1f%%', ...
+    sum(edge_image(:) > 0), numel(edge_image), ...
+    100 * sum(edge_image(:) > 0) / numel(edge_image)), ...
+    'BackgroundColor', [0.9 0.9 0.9], 'FontSize', 10);
 
-% Save magnitude as hex
-fid = fopen('matlab_magnitude_output.hex', 'w');
-for r = 1:valid_H
-    for c = 1:valid_W
-        fprintf(fid, '%04x\n', uint16(magnitude(r, c)));
-    end
-end
-fclose(fid);
+%% Figure 4: Side-by-Side Comparison
+figure('Name', 'Comparison', 'Position', [850, 650, 700, 400]);
 
-fprintf('\n=== Results Exported ===\n');
-fprintf('  matlab_edge_output.hex (for Vivado comparison)\n');
-fprintf('  matlab_magnitude_output.hex (gradient magnitudes)\n');
-fprintf('\n=== Done! ===\n');
+% Recreate original image for comparison (simple gradient)
+[XX, YY] = meshgrid(1:VALID_WIDTH, 1:VALID_HEIGHT);
+original_approx = uint8(mod(XX + YY, 256));
+
+subplot(1, 2, 1);
+imshow(original_approx);
+title('Approximate Input');
+
+subplot(1, 2, 2);
+imshow(edge_image);
+title('Vivado Edge Output');
+
+fprintf('\n=== Visualization Complete ===\n');
+fprintf('Three figures displayed:\n');
+fprintf('  1. Edge Detected Image\n');
+fprintf('  2. Colour-Mapped Visualization\n');
+fprintf('  3. Histogram\n');
+
+%% =========================================================================
+% MATLAB Reference (runs if Vivado file not found)
+% =========================================================================
+function run_matlab_reference(IMAGE_WIDTH, IMAGE_HEIGHT)
+    THRESHOLD = 128;
+    
+    % Load built-in image
+    img = imread('cameraman.tif');
+    if size(img, 3) == 3
+        img = rgb2gray(img);
+    end
+    img = imresize(img, [IMAGE_HEIGHT IMAGE_WIDTH]);
+    
+    % Sobel edge detection
+    Gx = [-1 0 1; -2 0 2; -1 0 1];
+    Gy = [-1 -2 -1; 0 0 0; 1 2 1];
+    
+    [H, W] = size(img);
+    edge_image = uint8(zeros(H-2, W-2));
+    magnitude = zeros(H-2, W-2);
+    
+    for r = 1:H-2
+        for c = 1:W-2
+            window = double(img(r:r+2, c:c+2));
+            gx = sum(sum(window .* Gx));
+            gy = sum(sum(window .* Gy));
+            mag = abs(gx) + abs(gy);
+            magnitude(r, c) = mag;
+            if mag >= THRESHOLD
+                edge_image(r, c) = 255;
+            end
+        end
+    end
+    
+    % Display results
+    figure('Name', 'MATLAB Reference', 'Position', [100, 100, 1200, 400]);
+    
+    subplot(1, 3, 1);
+    imshow(img);
+    title('Original Image');
+    
+    subplot(1, 3, 2);
+    imshow(edge_image);
+    title('Edge Detected');
+    
+    subplot(1, 3, 3);
+    imagesc(magnitude);
+    colormap(jet);
+    colorbar;
+    title('Magnitude (Colour Mapped)');
+    
+    fprintf('MATLAB reference complete.\n');
+end
