@@ -1,0 +1,298 @@
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4247  
+www.rsisinternational.org    
+    
+ Sobel  Edge  Detection  Algorithm  Using  Verilog  for 64 X 64 Grayscale 
+Image  
+1N V Sravan Kumar ., 1Nikhil S Kallakuri ., 1Parupally Chandana ., 2Ch.Raja  
+1Undergraduate Student Department of Electronics and Communication Engineering, Mahatma 
+Gandhi Institute of Technology Telangana,  India  
+2Associate Professor Department of Electronics and Communicationl, Engineering Mahatma Gandhi 
+Institute of Technology Telangana,  India  
+DOI: https://doi.org/10.51244/IJRSI.2025.120800384  
+Received: 0 9 September  2025; Accepted: 15 September  2025; Published: 16 October 2025  
+ABSTRACT  
+This paper presents the design and simulation of a Sobel edge detection module for 64×64 grayscale images 
+using  Verilog  HDL. The architecture employs  line buffers and a 3×3 convolution window to compute horizontal 
+and vertical intensity gradients in a pipelined manner. Post -processing in Python is used to generate bi nary edge 
+maps, intensity plots, and histograms for validation and visualization. The hardware pipeline achieves a 
+throughput of one pixel per clock cycle after pipeline  fill, requiring  4,096  cycles  per frame.  At a nominal  100 MHz 
+clock, the design complet es a frame in approximately  41 µs, corresponding  to over 24,000  frames per  second.  
+Compared  with a Python/OpenCV  baseline,  the Verilog  implementation  demonstrates  an estimated  20–25× 
+improvement in per -frame cycle efficiency. Although validated through simulation only, the design is 
+synthesizable  and provides  a hardware -friendly  framework for rapid prototyping of digital image processing 
+algorithms.  
+Keywords : Sobel  operator,  edge  detection,  Verilog  HDL, FPGA simulation, image processing, Python 
+visualization  
+INTRODUCTION  
+Edge detection is a key step in computer vision tasks such as segmentation, feature extraction, and object 
+recognition. Gradient -based operators, particularly Sobel, are widely used due to their balance of computational 
+simplicit y and effectiveness. While software implementations  in Python  or MATLAB  are common,  their 
+performance  is limited  for real-time embedded  applications where high throughput is essential.  
+This work implements the Sobel operator in Verilog HDL using a line -buffer architecture with a 3×3 sliding 
+window,  enabling  pixel -by-pixel  gradient  computation  in a pipelined  manner.  Each  new pixel  produces  an output  
+every clock  cycle  after pipeline  fill, ensuring  constant  throughput independent of image size. The design was 
+simulated on 64×64 grayscale images, and outputs were validated and visualized through Python -based post -
+processing.  
+The proposed  module  processes  an entire  frame  in 4,096 cycles, achieving sub -100 µs latency per frame at a 100 
+MHz operating frequency. Compared with a Python/OpenCV software baseline, the architecture demonstrates  
+significant  improvements  in cycle  efficiency and supports  real-time throughput.  Although  validation  was restricted 
+to simulation, the module is fully synthesizable and suitable for FPGA  deployment, making it a promising 
+foundation for embedded vision systems.  
+Problem Statement  
+Digital  image  processing  requires  efficient  and real-time edge  detection  for applications  in robotics,  surveillance,  
+and autonomous systems. Traditional so ftware solutions lack the parallelism and low latency required in 
+embedded or FPGA systems. Implementing Sobel edge detection in Verilog provides a hardware -friendly 
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4248  
+www.rsisinternational.org    
+    
+ solution. The challenge lies in simulating and validating the design without FPGA deployme nt, while ensuring 
+accurate edge maps and performance evaluation.  
+LITERATURE  REVIEW  
+ Navinkumar  et al. (2024) proposed  a multiplier - free modified Sobel edge detection design implemented 
+in Verilog on a Cyclone III FPGA. This model reduces logic complexity, achieves a Structural Similarity 
+Index (SSIM) of 96.43%, and reports synthesis metrics such as logic utilization and power consumption. 
+EUDL  
+ Sri Chakrapani et al. (2024) designed a low- power  VLSI  architecture  for Sobel  edge  detection using 
+Brent–Kung adder modules. Their implementation, tested across various FPGA platforms, details power 
+dissipation, delay, and device  utilization  results. themultiphysicsjournal.com  
+ Tchinda et al. (2021) explored parallel Sobel edge detection on FPGA for medical applications [1].  
+ Chapel and Daruwala (2014) demonstrated real - time FPGA -based image processing systems [2].  
+ Halder  (2012)  proposed  a fast Sobel  edge  detection architecture optimized  for VLSI design [3].  
+ OpenCV libraries and software implementations are widely used for benchmarking hardware accuracy 
+[4]. 
+These works highlight the demand for efficient FPGA - based image processing while this paper emphasizes 
+simulation -driven validation.  
+Proposed System  Architecture  
+The proposed  system  is designed  to implement  and simulate the  Sobel  edge detection  algorithm  in Verilog  for 
+processing 64×64 grayscale images. The architecture integrates a hardware -aligned  Verilog  design  with software -
+based  post- processing, enabling a complete simulation workflow for edge detection and analysis.  
+System  Overview  
+The system  is organized  into three  major  units:  
+ Input Unit : Accepts grayscale image pixels in sequential  order.  Each  pixel  is represented  as an 8- bit 
+intensity value and streamed into the Verilog module.  
+ Processing Unit : Implements the Sobel operator using line buffers and a 3×3 sliding window to calculate 
+horizontal and vertical gradients.  
+ Output & Analysis Unit : Produces gradient magnitudes  as edge intensity  values  which  are then exported 
+and reconstructed into images using Python scripts for visualization and further evaluation.  
+IMPLEMENTATION  METHODOLOGY:  
+A. Hardware  Simulation  Components  
+ Sobel Module in Verilog:  The module maintains two -line buffers to store previous pixel rows. At each  
+clock  cycle,  it forms  a 3×3-pixel  window  and computes horizontal (Gx) and vertical (Gy) gradients using 
+Sobel kernels. The gradient magnitude is obtained by summing the absolute v alues of Gx and Gy.  
+ Testbench: A Verilog testbench initializes the input image in hexadecimal format and streams 4096 
+(64×64) pixel values sequentially into the module.  It also captures  the output  edge  intensities for analysis.  
+ RTL Schematic : The Verilog i mplementation generates an RTL -level schematic in Xilinx tools to verify 
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4249  
+www.rsisinternational.org    
+    
+ the structural correctness of the design.  
+B. Software  Post-Processing  Components:  
+ Python  Scripts : The simulation  outputs  are stored as hexadecimal values. Python reconstructs these 
+values into a 2D image array.  
+ Visualization : The processed outputs are displayed as grayscale images, binary edge maps (after 
+applying thresholding), colour intensity plots, and histograms of edge pixel distribution.  
+ Statistical Analysis : Parameters such a s mean, median, standard deviation, minimum, and maximum 
+intensity values are calculated to quantify edge detection performance.  
+C. Schematic  Diagram:  
+ 
+Figure  1a: RTL  Schematic  
+ 
+Figure  1b: RTL  Schematic  
+
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4250 
+www.rsisinternational.org    
+    
+  
+Figure:  1c RTL  Schematic  
+Above figure 1a,1b,1c shows  the RTL schematics of the Sobel  edge  detection  module  generated  in Xilinx,  
+showing the hardware structure with buffers, processing units, and data paths.  
+The RTL schematic of the Sobel edge detection design illustrates  the hardware  structure  generated  from  the 
+Verilog code.  It shows  how different  modules,  such as line buffers, adders, and control logic, are interconnected 
+to form the processing pipeline. The schematic confirms that the 3×3 windowing, gradient computation, and 
+output generation are struc turally mapped into hardware components. This representation helps verify the 
+correctness of the design before  synthesis  and demonstrates  its suitability  for FPGA - based implementation.  
+Compared to other operators like Roberts or Prewitt, the Sobel operator applies higher weights (±2 \pm 2±2) to 
+central  pixels  in the convolution.  This makes  it more  robust against noise while still preserving sharp transitions. 
+Its simplicity and low computational cost make Sobel particularly  suitable for hardware -oriented implementations 
+such as FPGA or Verilog -based systems.  
+Functional  Flow:  
+The step-by-step functional  flow of the proposed architecture is as follows:  
+1. Image Input : A 64×64 grayscale image is converted into hexadecimal values.  
+2. Pixel  Streaming : The testbench  feeds  pixel  values sequentially into the Sobel Verilog module.  
+3. Window Formation : Line buffers create a 3×3 neighbourhood for gradient calculation.  
+4. Edge Computation : Gx and Gy are computed using  Sobel  kernels,  and the gradient  magnitude  is 
+obtaine d. 
+5. Output  Generation : The edge intensity  values  are output sequentially in 8 -bit format.  
+6. Image Reconstruction : Python processes the output  values  to recreate  the edge -detected  image.  
+7. Analysis and Visualization : Binary maps, histograms, and statistical summaries are generated for 
+evaluation.  
+The functional  flow of the proposed  system  starts  with a 64×64 grayscale image, which is converted into 
+
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4251  
+www.rsisinternational.org    
+    
+ hexadecimal pixel values. These pixel values are streamed sequentially into the Verilog testbench. Line buffers 
+are used to store previous rows, enabling the formation  of a 3×3 sliding  window  for every  pixel.  The Sobel 
+operator then computes horizontal (Gx) and vertical  (Gy)  gradients  from  this window.  The gradient magnitude 
+is generated  as an 8-bit edge  intensity  value for each pixel. These output values are reconstructed into an image 
+using Python, providing grayscale, colour - mapped, and binary edge visualizations.  
+Finally, histograms and statistical analysis are performed  to validate  the accuracy  and effectivene ss of the design. 
+The approach replicates hardware -style image  processing  without  requiring  FPGA  deployment. This makes  the 
+design  flexible  for academic  prototyping and  adaptable  for future  real-time FPGA  applications.  In addition, the 
+modular flow ensures  that the system can be scaled easily to higher image resolutions. Since the design  is based  
+on a standard  Sobel  operator,  it can also be  integrated  with other  digital  image  processing  blocks for advanced 
+tasks. Overall, the functional flow highlights an efficient pipeline that bridges hardware simulation and software 
+analysis for edge detection.  
+Block  Diagram:  
+ 
+Figure  2: Block  diagram  
+Above figure 2 shows the functional flow of Sobel edge detection. The process starts with image preprocessing, 
+followed b y gradient calculation and convolution using a 3×3 window. Thresholding  refines the result, and the 
+final output is displayed with clear edge boundaries.  
+RESULTS  AND  DISCUSSION  
+The proposed Sobel edge detection design was simulated for  a 64×64  grayscale  input  image  to evaluate  the 
+performance of the Verilog -based implementation. The original test image (Fig. 3) served as a reference for 
+validating the design. After processing through the Verilog module, the edge -detected output (Fig. 4) 
+successfully highl ighted intensity transitions that correspond to object boundaries and  structural  details  within  
+the image.  The detected  edges appeared  sharp  and consistent  with the expected  behaviour of the Sobel operator.  
+To enhance  visualization,  a pseudo  colour -mapped  version of  the output  (Fig.  5) was generated.  In this 
+representation, high gradient values were shown in brighter colours, making it easier to identify regions of strong 
+
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4252  
+www.rsisinternational.org    
+    
+ transitions compared to the grayscale output. This visualization confirmed that the sy stem accurately  
+distinguished between edge and non -edge regions.  
+The histogram  of pixel  intensities  (Fig. 6)  further  reinforced these  observations.  The majority  of pixel  values  
+were concentrated  near zero,  corresponding  to non-edge  regions, while  a significant  number  of pixels  were  
+clustered  at higher intensity  levels,  indicating  strong  edge  regions.  This distribution is consistent with the 
+theoretical behaviour of the  Sobel  operator,  which  is designed  to suppress  flat regions while emphasizing 
+areas  of high intensity change. In  addition  to visual  validation,  the statistical  analysis  of output values confirmed 
+the reliability of the design. The mean and median intensities indicated that the image was dominated  by non-
+edge  regions,  while  the maximum  value reached 255, proving that the algorithm could effectively capture  strong  
+edge  features.  The standard  deviation suggested  good  variation  in edge strength,  which indicates that the 
+design  captured  both weak  and strong  edges  without excessive noise.  
+Overall, the results validate that the Verilog -based design replicates hardware -friendly image processing 
+pipelines efficiently. Moreover, the integration of Python for post - processing provided deeper insights into 
+gradient distribution,  edge  quality,  and statistical  trends,  making  the system not only functional but also 
+educationally valuable for prototyping and research in digital image processing.  
+  
+Figure 3: Original 64x64  
+ 
+Figure  4: Edge  detected Image.   
+
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4253  
+www.rsisinternational.org    
+    
+ Above figure 3 shows the test image used to evaluate the Sobel edge detection algorithm. It consists of 4096 
+pixels arranged  in a 64×64  grid, with intensity  values  ranging  from 0 to 255. This image serves as the baseline 
+reference for comparing the processed outputs and analyzing how well the Verilog design highlights transitions 
+in intensity.  
+Above figure 4 shows the edge -detected output generated by the Sobel operator in Verilog is shown in this figure. 
+Clear boundaries and structural details within the input image are highlighted, while flat, uniform regions remain 
+suppressed. This demonstrates that the 3×3 Sobel kernels, implemented in hardware simulation, accurately detect 
+intensity changes along both horizontal and ve rtical directions.  
+ 
+Figure  5: Colour  mapped  edge  visualization  
+Above  figure  5 shows  to enhance  visual  interpretation;  the grayscale  Sobel  output  is represented  with a pseudo -
+colour map. Higher gradient magnitudes are depicted using brighter colours, while  lower values correspond to 
+darker shades. This visualization makes it easier to distinguish regions with strong edges from those with weak 
+or no activity, thereby providing a more intuitive understanding of the gradient distribution.  
+ 
+Figure  6: Histogram  of pixel  intensities  
+
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4254  
+www.rsisinternational.org    
+    
+ Above figure 6 shows the histogram that illustrates the statistical distribution of pixel intensity values from the 
+Sobel output. Most pixel values  are clustered around zero, indicating non -edge regions, while a noticeable 
+concentrati on is observed near maximum values (close to 255),  confirming  the detection  of strong  edges.  The 
+spread of the histogram reflects the balance between weak, moderate,  and strong  edges  in the image.  This 
+supports  the conclusion that the algorithm effectively  separates background from object boundaries.  
+CONCLUSION  & FUTURE  SCOPE  
+This paper presented the Verilog implementation and simulation  of the Sobel  edge  detection  algorithm  for 64×64 
+grayscale  images.  The use of line buffers  and a 3×3 sliding window enabled efficient streaming -based processing, 
+which is ideal for FPGA hardware. Simulation outputs confirmed accurate detection of object boundaries and 
+gradient variations, validated through grayscale, pseudo - colour visualization, and hist ogram analysis. The 
+results demonstrated  that the Verilog  design  successfully  emulates hardware -level image processing while 
+Python -based analysis offered flexibility for testing and validation.  
+ While the proposed system performs well for 64×64 grayscale i mages, it can be extended and enhanced 
+in several directions:  
+ Real -Time Video Processing – Integrating the design with live camera input for real -time streaming and 
+processing.  
+ High -Resolution Support – Scaling the architecture to support larger image sizes such as 720p  or 1080p,  
+which  would  require  memory  and buffer optimization.  
+ Advanced Edge Detection Operators – Incorporating more sophisticated algorithms like Canny, 
+Laplacian of Gaussian, or Scharr operators  for better  accuracy  and noise  handling.  
+ Color Image Processing – Extending the Sobel algorithm to RGB images to detect edges across different 
+color channels. AI/ML Integration – Coupling the Sobel edge outputs with machine learning models 
+for tasks like object recognition, defect detection, or me dical image analysis.  
+ FPGA  Deployment  – Implementing  the design  on an actual FPGA board to measure real -time 
+performance, latency, and power efficiency.  
+ Optimization for IoT Devices – Adapting the system for resource -constrained embedded systems in 
+IoT applications, where power efficiency is critical.  
+ By addressing  these  future  directions,  the proposed system can evolve into a robust real -time edge 
+detection  framework  with applications  in robotics, surveillance, medical imaging, autonomous vehicles, 
+and industrial inspection.  
+Applications  
+The Sobel edge detection algorithm has wide applications across multiple domains. In medical imaging , it helps 
+in detecting tissue boundaries and abnormalities. In autonomous vehicles and robotics , edge detection is crucial  
+for object  recognition  and navigation.  In industrial inspection , it is used to identify defects on surfaces and 
+products. In security and surveillance systems , Sobel assists in motion detection and activity monitoring. Its 
+simplicity  and hardware -friendly  nature  make it  especially suitable for real-time FPGA and embedded system 
+implementations . 
+The Sobel  edge detection  algorithm  finds  wide  applications in diverse domains due to its simplicity and 
+efficiency. In medical  imaging , it is used to  highlight  tissue  boundaries, tumours, and abnormal structures, 
+assisting in computer - aided diagnosis. In autonomous vehicles and robotics , Sobel -based edge detection 
+supports lane detection, obstacle recognition, and navigation in real time. In industrial  inspection , it enables 
+defect detection on surfaces, cracks in materials, and quality monitoring of manufactured products. In security 
+and surveillance systems , it assists  in motion  tracking,  object  detection,  and intruder recognition. Recent studies 
+INTERNATIONAL JOURNAL OF RESEARCH AND SCIENTIFIC INNOVATION (IJRSI)  
+ISSN  No. 2321 -2705 | DOI: 10.51244/IJRSI |Volume XII Issue I X September  2025  
+Page 4255  
+www.rsisinternational.org    
+    
+ (2023–2024) also explore its integration with IoT-enabled smart cameras and low-power  FPGA  
+implementations  for edge  devices. With  its hardware -friendly  nature,  Sobel  remains  one of the most practical 
+and reliable algorithms for real -time embedded and FPGA -based vision applications.  
+ACKNOWLEDGEMENT  
+We would like to express our heartfelt gratitude to Associate Professor, Faculty Advisor Dr. Ch. Raja, Department 
+of Electronics and Communication Engineering, Mahatma Gandhi Institute of Technology, Hyderabad, 
+Telangana, India, for his invaluable guidance, encouragement, and continuous support throughout the course of 
+this research. His expert insights and constructive suggestions played a crucial  role in shaping  our work.  We also 
+extend  our thanks to the facult y members and technical staff of the ECE department for providing the necessary 
+resources and a conducive environment for our project. This paper is the result  of collaborative  effort  and 
+academic mentorship,  for which we are deeply thankful.  
+REFERENCES  
+1. B. Saha  Tchinda,  D. T.-D. (2021).  Parallel  Processing  of Sobel Edge Detection on FPGA (MDPI). Informatics 
+in Medicine Unlocked, Volume 23.  
+2. Chapel, G., & Daruwala, R. (2014). Real-Time Image Processing  using  FPGA.  2014  International  Conference  
+on Communication and Signal Processing. IEEE.  
+3. Halder, S. B. (2012). A Fast FPGA Based Architecture for Sobel Edge Detection. Progress in VLSI Design 
+and Test. Springer.  
+4. OpenCV  Documentation.  (n.d.).  Retrieved  from  docs.opencv.org: https://docs.opencv.org/ 
+master/d4/d86/groupimgprocf ilter.html#gacea54f142e81b6758cb6f37 5ce782c8d  
+5. Palnitkar,  S. (2003).  Verilog  HDL.  Prentice  Hall.  
+6. Waskom,  M. (n.d.).  Seaborn:  Statistical  Data Visualisation. Retrieved from https://seaborn.pydata.org/  
+7. Reddy, B. S., & Chatterji, B. N. (1996). An FFT -based technique for translation, rotation, and scale -invariant 
+image registration. IEEE Transactions on Image Processing, 5(8), 1266 –1271.  
+8. Gonzalez,  R. C., & Woods,  R. E. (2018). Digital  Image Processing (4th ed.). Pearson.  
+9. Oppenheim, A. V., & Schafer, R. W. (2010). Discrete - Time Signal Processing (3rd ed.). Prentice Hall.  
+10. Xilinx  Inc. (2023).  Vivado  Design  Suite  User  Guide.  Retrieved  from 
+https: //www.xilinx.com/support/documentation/sw_manua  ls/xilinx2023/vivado.html  

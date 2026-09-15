@@ -1,0 +1,61 @@
+# Vivado generated files
+*.jou
+*.log
+*.str
+*.runs/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.srcs/
+*.xpr
+*.xpr.user
+vivado/streaming_conv_project/
+*.gen/
+*.gsrc/
+*.hbs/
+*.o
+*.d
+.Xil/
+*.wdb
+*.vcd
+*.pb
+xsim.dir/
+clockInfo.txt
+
+# Simulation outputs
+vivado/sim/*.wdb
+vivado/sim/*.wcfg
+vivado/sim/*.vcd
+vivado/sim/xsim.*
+vivado/sim/*.pb
+vivado/sim/*.jou
+vivado/sim/*.log
+vivado/sim/*.str
+vivado/sim/obj/
+
+# Synthesis outputs
+vivado/reports/*.rpt
+vivado/reports/*.txt
+!vivado/reports/README.md
+
+# MATLAB generated files
+*.asv
+*.m~
+*.mex*
+*.mlappinstall
+*.mltbx
+
+# Python
+__pycache__/
+*.pyc
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
