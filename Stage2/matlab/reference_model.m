@@ -1,146 +1,140 @@
 %% reference_model.m
-% MATLAB Reference Model for Streaming 3x3 Convolution and Sobel Edge Detection
-% This script provides a software reference for verifying the SystemVerilog RTL.
+% MATLAB Reference Model for Sobel Edge Detection
+% Input: Any image → Output: Edge map + Colour map + Histogram
 %
 % Usage:
-%   1. Run this script in MATLAB
-%   2. Compare outputs with DUT simulation results
-%   3. Verify correctness by checking pixel-by-pixel match
-%
-% Author: [Your Name]
-% Date: September 2025
+%   1. Set image_path to your image file
+%   2. Run this script
+%   3. Three figures will appear: Edge detected, Colour mapped, Histogram
 
 %% Parameters
-WIDTH = 64;
-HEIGHT = 64;
+clear; clc; close all;
+
+IMAGE_WIDTH = 64;
+IMAGE_HEIGHT = 64;
 THRESHOLD = 128;
 
-%% Stage 1: 3x3 Convolution Reference
+%% Load Image
+% Change this to your image path
+image_path = 'cameraman.tif';  % MATLAB built-in image
 
-fprintf('=== Stage 1: 3x3 Convolution Reference ===\n');
+% If image doesn't exist, create a test image
+if exist(image_path, 'file')
+    img = imread(image_path);
+else
+    fprintf('Image not found. Using built-in cameraman image.\n');
+    img = imread('cameraman.tif');
+end
 
-% Test 1: Constant image
-img_const = uint8(ones(HEIGHT, WIDTH) * 128);
-kernel = ones(3, 3);  % Box filter
-out_const = conv2_3x3(img_const, kernel);
-fprintf('Constant test: mean output = %d\n', mean(out_const(:)));
+% Convert to grayscale if needed
+if size(img, 3) == 3
+    img = rgb2gray(img);
+end
 
-% Test 2: Gradient image
-img_grad = uint8(mod((0:HEIGHT-1)' * 16 + (0:WIDTH-1), 256));
-out_grad = conv2_3x3(img_grad, kernel);
-fprintf('Gradient test: min = %d, max = %d\n', min(out_grad(:)), max(out_grad(:)));
+% Resize to 64x64
+img = imresize(img, [IMAGE_HEIGHT IMAGE_WIDTH]);
 
-% Test 3: Checkerboard
-img_checker = uint8(zeros(HEIGHT, WIDTH));
-for r = 0:HEIGHT-1
-    for c = 0:WIDTH-1
-        if mod(floor(r/8) + floor(c/8), 2) == 0
-            img_checker(r+1, c+1) = 255;
-        end
+fprintf('=== Sobel Edge Detection Reference Model ===\n');
+fprintf('Image size: %dx%d\n', IMAGE_WIDTH, IMAGE_HEIGHT);
+fprintf('Threshold: %d\n', THRESHOLD);
+
+%% Stage 1: Window Generation (3x3)
+% Create 3x3 windows for each pixel (valid region only)
+[H, W] = size(img);
+valid_H = H - 2;
+valid_W = W - 2;
+
+% Store all 3x3 windows
+windows = zeros(valid_H, valid_W, 3, 3);
+for r = 1:valid_H
+    for c = 1:valid_W
+        windows(r, c, :, :) = double(img(r:r+2, c:c+2));
     end
 end
-out_checker = conv2_3x3(img_checker, kernel);
-fprintf('Checkerboard test: mean = %.1f\n', mean(out_checker(:)));
 
-% Test 4: Random
-rng('default');  % Reproducible
-img_rand = uint8(randi([0, 255], HEIGHT, WIDTH));
-out_rand = conv2_3x3(img_rand, kernel);
-fprintf('Random test: mean = %.1f, std = %.1f\n', mean(out_rand(:)), std(double(out_rand(:))));
+fprintf('Stage 1: Generated %d x %d = %d windows\n', valid_W, valid_H, valid_W*valid_H);
 
-%% Stage 2: Sobel Edge Detection Reference
-
-fprintf('\n=== Stage 2: Sobel Edge Detection Reference ===\n');
-
+%% Stage 2: Sobel Edge Detection
 % Sobel kernels
 Gx = [-1 0 1; -2 0 2; -1 0 1];
 Gy = [-1 -2 -1; 0 0 0; 1 2 1];
 
-% Test 5: Vertical edge
-img_vert = uint8(zeros(HEIGHT, WIDTH));
-img_vert(:, WIDTH/2+1:end) = 255;
-out_vert = sobel_edge(img_vert, THRESHOLD);
-fprintf('Vertical edge: edge pixels = %d\n', sum(out_vert(:) > 0));
+% Compute gradients
+grad_x = zeros(valid_H, valid_W);
+grad_y = zeros(valid_H, valid_W);
+magnitude = zeros(valid_H, valid_W);
 
-% Test 6: Horizontal edge
-img_horiz = uint8(zeros(HEIGHT, WIDTH));
-img_horiz(HEIGHT/2+1:end, :) = 255;
-out_horiz = sobel_edge(img_horiz, THRESHOLD);
-fprintf('Horizontal edge: edge pixels = %d\n', sum(out_horiz(:) > 0));
-
-% Test 7: Square
-img_square = uint8(zeros(HEIGHT, WIDTH));
-img_square(22:41, 22:41) = 255;
-out_square = sobel_edge(img_square, THRESHOLD);
-fprintf('Square: edge pixels = %d\n', sum(out_square(:) > 0));
-
-% Test 8: Checkerboard
-out_checker_sobel = sobel_edge(img_checker, THRESHOLD);
-fprintf('Checkerboard Sobel: edge pixels = %d\n', sum(out_checker_sobel(:) > 0));
-
-% Test 9: Random
-out_rand_sobel = sobel_edge(img_rand, THRESHOLD);
-fprintf('Random Sobel: edge pixels = %d\n', sum(out_rand_sobel(:) > 0));
-
-%% Export results for comparison with DUT
-% Save outputs as hex for comparison with testbench
-export_hex(out_const, 'test_const_output.hex');
-export_hex(out_grad, 'test_grad_output.hex');
-export_hex(out_checker, 'test_checker_output.hex');
-export_hex(out_rand, 'test_random_output.hex');
-export_hex(out_vert, 'test_vert_output.hex');
-export_hex(out_horiz, 'test_horiz_output.hex');
-export_hex(out_square, 'test_square_output.hex');
-export_hex(out_checker_sobel, 'test_checker_sobel_output.hex');
-export_hex(out_rand_sobel, 'test_random_sobel_output.hex');
-
-fprintf('\n=== All tests complete. Hex files exported. ===\n');
-
-%% Helper Functions
-
-function out = conv2_3x3(img, kernel)
-    % 3x3 convolution matching RTL behavior (valid region only)
-    [H, W] = size(img);
-    out = zeros(H-2, W-2, 'uint8');
-    for r = 1:H-2
-        for c = 1:W-2
-            window = double(img(r:r+2, c:c+2));
-            val = sum(sum(window .* double(kernel)));
-            val = max(0, min(255, val));  % Saturate
-            out(r, c) = uint8(val);
-        end
+for r = 1:valid_H
+    for c = 1:valid_W
+        window = squeeze(windows(r, c, :, :));
+        grad_x(r, c) = sum(sum(window .* Gx));
+        grad_y(r, c) = sum(sum(window .* Gy));
+        magnitude(r, c) = abs(grad_x(r, c)) + abs(grad_y(r, c));
     end
 end
 
-function out = sobel_edge(img, threshold)
-    % Sobel edge detection matching RTL behavior
-    Gx = [-1 0 1; -2 0 2; -1 0 1];
-    Gy = [-1 -2 -1; 0 0 0; 1 2 1];
-    [H, W] = size(img);
-    out = zeros(H-2, W-2, 'uint8');
-    for r = 1:H-2
-        for c = 1:W-2
-            window = double(img(r:r+2, c:c+2));
-            gx_val = sum(sum(window .* Gx));
-            gy_val = sum(sum(window .* Gy));
-            mag = abs(gx_val) + abs(gy_val);
-            if mag >= threshold
-                out(r, c) = uint8(255);
-            else
-                out(r, c) = uint8(0);
-            end
-        end
-    end
-end
+% Threshold
+edge_map = uint8(zeros(valid_H, valid_W));
+edge_map(magnitude >= THRESHOLD) = 255;
 
-function export_hex(img, filename)
-    % Export image as hex file (one pixel per line, matching testbench format)
-    fid = fopen(filename, 'w');
-    [H, W] = size(img);
-    for r = 1:H
-        for c = 1:W
-            fprintf(fid, '%02x\n', img(r, c));
-        end
+fprintf('Stage 2: Sobel edge detection complete\n');
+fprintf('  Edge pixels: %d / %d (%.1f%%)\n', ...
+    sum(edge_map(:) > 0), numel(edge_map), ...
+    100 * sum(edge_map(:) > 0) / numel(edge_map));
+
+%% Figure 1: Original and Edge Detected
+figure('Name', 'Sobel Edge Detection', 'Position', [100, 100, 1000, 400]);
+
+subplot(1, 2, 1);
+imshow(img);
+title('Original Image (64x64)');
+
+subplot(1, 2, 2);
+imshow(edge_map);
+title('Edge Detected Image');
+
+%% Figure 2: Colour-Mapped Visualization
+figure('Name', 'Colour-Mapped Edge Output', 'Position', [100, 550, 800, 500]);
+
+% Use magnitude directly for colour mapping (before thresholding)
+imagesc(magnitude);
+colormap(jet);
+colorbar;
+title('Colour-Mapped Grayscale Edge Output');
+xlabel('Column');
+ylabel('Row');
+
+%% Figure 3: Histogram
+figure('Name', 'Histogram of Pixel Intensities', 'Position', [950, 100, 700, 500]);
+
+% Histogram of edge map
+histogram(double(edge_map(:)), 256, 'FaceColor', [0.5 0.5 0.5]);
+title('Histogram of Pixel Intensities');
+xlabel('Intensity Value');
+ylabel('Frequency');
+xlim([0 255]);
+grid on;
+
+%% Export Results
+% Save edge map as hex (for comparison with Vivado DUT)
+fid = fopen('matlab_edge_output.hex', 'w');
+for r = 1:valid_H
+    for c = 1:valid_W
+        fprintf(fid, '%02x\n', edge_map(r, c));
     end
-    fclose(fid);
 end
+fclose(fid);
+
+% Save magnitude as hex
+fid = fopen('matlab_magnitude_output.hex', 'w');
+for r = 1:valid_H
+    for c = 1:valid_W
+        fprintf(fid, '%04x\n', uint16(magnitude(r, c)));
+    end
+end
+fclose(fid);
+
+fprintf('\n=== Results Exported ===\n');
+fprintf('  matlab_edge_output.hex (for Vivado comparison)\n');
+fprintf('  matlab_magnitude_output.hex (gradient magnitudes)\n');
+fprintf('\n=== Done! ===\n');
