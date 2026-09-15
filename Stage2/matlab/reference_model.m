@@ -17,12 +17,32 @@ VALID_HEIGHT = IMAGE_HEIGHT - 2; % 62
 %% Check if Vivado output exists
 vivado_file = 'vivado_edge_output.hex';
 
-if ~exist(vivado_file, 'file')
-    fprintf('ERROR: %s not found!\n', vivado_file);
-    fprintf('Run Vivado simulation first to generate the file.\n');
-    fprintf('\nAlternatively, running MATLAB reference model...\n\n');
-    
-    % Run MATLAB reference instead
+% Search for the file in common locations
+search_paths = {
+    'vivado_edge_output.hex', ...
+    '../vivado/stage2_sobel_edge/stage2_sobel_edge.sim/sim_1/behav/xsim/vivado_edge_output.hex', ...
+    '../../vivado/stage2_sobel_edge/stage2_sobel_edge.sim/sim_1/behav/xsim/vivado_edge_output.hex', ...
+    '../../../vivado/stage2_sobel_edge/stage2_sobel_edge.sim/sim_1/behav/xsim/vivado_edge_output.hex', ...
+    'C:/Streaming-3x3-Convolution-and-Sobel-FPGA-Project/Stage2/vivado/stage2_sobel_edge/stage2_sobel_edge.sim/sim_1/behav/xsim/vivado_edge_output.hex'
+};
+
+found = false;
+for i = 1:length(search_paths)
+    if exist(search_paths{i}, 'file')
+        vivado_file = search_paths{i};
+        found = true;
+        fprintf('Found Vivado output: %s\n', vivado_file);
+        break;
+    end
+end
+
+if ~found
+    fprintf('ERROR: vivado_edge_output.hex not found!\n');
+    fprintf('Searched in:\n');
+    for i = 1:length(search_paths)
+        fprintf('  - %s\n', search_paths{i});
+    end
+    fprintf('\nRunning MATLAB reference model instead...\n\n');
     run_matlab_reference(IMAGE_WIDTH, IMAGE_HEIGHT);
     return;
 end
